@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style id="css">
+        *{margin:0px;padding:0px;}
+        .hhh{
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        .float{
+            float:left;
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+
+
+            var oDiv = document.getElementById('box1')
+            //var ocss=document.getElementById('css');
+            //ocss.innerHTML+='#box1{height:200px;width:200px;background:red';//innerHTML+= =ocss.innerHTML+#box{}
+            //obox.style.cssText=覆盖原来内容
+            //    oDiv.style.width = '100px';
+            //    oDiv.style.height = '100px';
+            //    oDiv.style.background = 'red';
+            //    oDiv.style.marginLeft = '50px';
+            //    oDiv.style.padding = '10px';
+            oDiv.className = 'hhh';
+            /*
+         oDiv.style.styleFloat = 'left';
+         oDiv.style.cssFloat = 'left';
+         */
+        oDiv.className = 'float';
+            }
+    </script>
+
+</head>
+<body>
+<div id="box1" style="margin-top:20px"></div>
+
+
+</body>
+</html>

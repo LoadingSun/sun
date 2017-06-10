@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>please enter your title</title>
+    <meta charset="utf-8">
+    <meta name="Author" content="潭州学院-阿飞老师">
+    <style type='text/css'>
+        *{ margin:0; padding:0;}
+
+        #banner{
+            width:520px;
+            height:280px;
+            margin:100px auto;
+            border:1px solid #f00;
+            position:relative;
+        }
+        #pic{
+            width:520px;
+            height:280px;
+            /*overflow:hidden;*/
+        }
+        #pic ul{
+            width:1000%;
+            height:280px;
+        }
+        #pic ul li{
+            list-style:none;
+            float:left;
+        }
+        #btn div{
+            width:23px;
+            height:36px;
+            background:#000;
+            background:rgba(0,0,0,.5);
+            font-size:18px;
+            color:#fff;
+            font-weight:bold;
+            text-align:center;
+            line-height:36px;
+            cursor:pointer;
+            position:absolute;
+            top:50%;
+            margin-top:-18px;
+        }
+        #left{ left:0;display: none;}
+        #right{ right:0;display: none;}
+
+        #tab{
+            width:71px;
+            height:14px;
+            background:#fff;
+            background:rgba(255,255,255,.5);
+            position:absolute;
+            bottom:15px;
+            left:50%;
+            margin-left:-35px;
+            border-radius:7px;
+        }
+        #tab ul li{
+            list-style:none;
+            float:left;
+            width:10px;
+            height:10px;
+            background:#999;
+            border-radius:100%;
+            margin:2px 2px;
+            cursor:pointer;
+        }
+        #tab ul li.on{
+            background:#f60;
+        }
+    </style>
+</head>
+<body>
+
+<div id="banner">
+    <div id="pic">
+        <ul>
+            <li><img src="../images/0001.jpg" alt="" /></li>
+            <li><img src="../images/0002.jpg" alt="" /></li>
+            <li><img src="../images/0003.jpg" alt="" /></li>
+            <li><img src="../images/0004.jpg" alt="" /></li>
+            <li><img src="../images/0005.jpg" alt="" /></li>
+            <li><img src="../images/0001.jpg" alt="" /></li>
+        </ul>
+    </div>
+
+    <div id="btn">
+        <div id="left">&lt;</div>
+        <div id="right">&gt;</div>
+    </div>
+
+    <div id="tab">
+        <ul>
+            <li class='on'></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src='../js/move.js'></script>
+<script type="text/javascript">
+    (function(){
+        var tabLi = document.getElementById('tab').getElementsByTagName('li');
+        var oUl = document.getElementById('pic').getElementsByTagName('ul')[0];
+        var oRight = document.getElementById('right');
+        var oLeft = document.getElementById('left');
+        var oBanner = document.getElementById('banner');
+        var ligoudaner = 0;
+        var timer;
+        var nowTime = 0;
+
+        for ( var i=0;i<tabLi.length;i++ )
+        {
+            tabLi[i].wangdachui = i;
+            tabLi[i].onclick = function(){
+                tabLi[ligoudaner].className = ''; // 前一个变到没有
+                ligoudaner = this.wangdachui;
+                change();
+            };
+        };
+
+        oRight.onclick = function(){
+            if ( new Date() - nowTime > 300 )
+            {
+                nowTime = new Date();
+                tabLi[ligoudaner].className = '';
+                ligoudaner ++;
+                ligoudaner %= tabLi.length+1;
+                change();
+            }
+
+        };
+
+        oLeft.onclick = function(){
+            if ( new Date() - nowTime > 300 )
+            {
+                nowTime = new Date();
+                tabLi[ligoudaner].className = '';
+                ligoudaner = ligoudaner<=0?tabLi.length-1:ligoudaner-1;
+                change();
+            };
+        };
+
+        auto();
+        oBanner.onmouseenter = function(){
+            oLeft.style.display='block';
+            oRight.style.display='block';
+            clearInterval( timer );
+        };
+
+        oBanner.onmouseleave = function(){
+            oLeft.style.display='none';
+            oRight.style.display='none';
+            auto();
+        };
+
+        function auto(){
+            timer = setInterval(function(){
+                tabLi[ligoudaner].className = '';
+                ligoudaner ++;
+                ligoudaner %= tabLi.length;
+                change();
+            },3000);
+        };
+
+        function change(){
+            var now=ligoudaner;
+            if(now>=tabLi.length){
+                now=0
+            }
+            tabLi[now].className = ''; // 前一个变到没有
+            tabLi[now].className = 'on'; // 当前这个加上on
+            move( oUl , {marginLeft : -520*ligoudaner + 'px'} , 300,function () {
+                if(ligoudaner==tabLi.length){
+                    this.style.marginLeft='0px';
+                    ligoudaner=0;
+                }
+            } );
+        };
+    })();
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{ margin:0; padding:0;}
+        #banner{
+            width: 790px;
+            height: 340px;
+            /*border: 1px solid black;*/
+            margin: 100px auto;
+            position: relative;
+        }
+        #pic{
+            width: 790px;
+            height: 340px;
+            overflow: hidden;
+        }
+        #pic ul{
+            width:1000%;
+            margin-left: -790px;
+        }
+        #pic ul li{
+            list-style: none;
+            float: left;
+        }
+        #btn div{
+            width: 32px;
+            height: 36px;
+            background:#000;
+            background:rgba(0,0,0,.5);
+            top: 50%;
+            margin-top: -18px;
+            text-align: center;
+            line-height: 36px;
+            font-size: 18px;
+            font-weight:bold;
+            color:#fff;
+            position: absolute;
+            cursor: pointer;
+        }
+        #left{ left:0;}
+        #right{ right:0;}
+        #tab{
+            width: 111px;
+            height: 17px;
+            background:#fff;
+            background:rgba(255,255,255,.5);
+            position:absolute;
+            bottom:15px;
+            left:50%;
+            margin-left:-35px;
+            border-radius:7px;
+        }
+        #tab ul li{
+            list-style: none;
+            float: left;
+            width: 12px;
+            height: 12px;
+            background:#999;
+            border-radius: 100%;
+            margin: 2px 5px;
+            cursor: pointer;
+        }
+        #tab ul li.on{
+            background:#db192a;
+        }
+        #left,#right{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="banner">
+    <div id="pic">
+        <ul>
+            <li><img src="../images/005.jpg" alt=""/></li>
+            <li><img src="../images/001.jpg" alt=""/></li>
+            <li><img src="../images/002.jpg" alt=""/></li>
+            <li><img src="../images/003.jpg" alt=""/></li>
+            <li><img src="../images/004.jpg" alt=""/></li>
+            <li><img src="../images/005.jpg" alt=""/></li>
+            <li><img src="../images/001.jpg" alt=""/></li>
+        </ul>
+    </div>
+    <div id="btn">
+        <div id="left"><</div>
+        <div id="right">></div>
+    </div>
+    <div id="tab">
+        <ul>
+            <li class="on"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div>
+<script src="../js/move.js"></script>
+<script>
+    (function () {
+        var obanner=document.getElementById('banner')
+        var otabli=document.getElementById('tab').getElementsByTagName('li');
+        var oul=document.getElementById('pic').getElementsByTagName('ul')[0];
+        var oright=document.getElementById('right');
+        var oleft=document.getElementById('left');
+        var index=0;
+        var timer;
+        var nowtime=0;
+        for(i=0;i<otabli.length;i++){
+            otabli[i].icao=i;
+            otabli[i].onmouseover=function () {
+                if(new Date()-nowtime>400){
+                    nowtime=new Date();
+                    otabli[index].className='';
+                    index=this.icao;
+                    change();
+                    //otabli[index].className='on';
+                    //move(oul,{marginLeft:-790*index+'px'},400);
+                }
+
+            }
+        };
+        oright.onclick=function () {
+            if(new Date()-nowtime>400){
+                nowtime=new Date();
+                otabli[index].className='';
+                index++;
+//                index%=otabli.length+1;
+                if(index>otabli.length){
+                 index=0;
+                 }
+                change();
+            };
+            };
+
+        oleft.onclick=function () {
+            if(new Date()-nowtime>400){
+                nowtime=new Date();
+                otabli[index].className='';
+                index=index<0?index=otabli.length-1:index-1;
+//				ligoudaner<0?ligoudaner = tabLi.length-1:ligoudaner--;//都可以
+//                index--;
+//                if(index<0){
+//                    index=otabli.length-1;
+//                }
+                change();
+                //otabli[index].className='on';
+                //move(oul,{marginLeft:-790*index+'px'},400);
+            };
+            };
+
+        auto();
+        obanner.onmouseenter=function(){
+            oleft.style.display='block';
+            oright.style.display='block';
+            clearInterval(timer);
+        };
+        obanner.onmouseleave=function(){
+            oleft.style.display='none';
+            oright.style.display='none';
+            auto();
+        };
+        function auto() {
+            timer=setInterval(function () {
+                otabli[index].className='';
+                index++;
+                index%=otabli.length+1;
+                /*if(index>=otabli.length){
+                 index=0;
+                 }*/
+                change();
+            },1500);
+        };
+        function change() {
+            var now=index;
+            if(now>=otabli.length){
+                now=0;
+            };
+            if(now<0){
+                now=otabli.length-1;
+            }
+            otabli[now].className='on';
+            move(oul,{marginLeft:-790*(index+1)+'px'},400,function () {
+                if(index==otabli.length){
+                    this.style.marginLeft='-790px';
+                    index=now;
+                }
+                else if (index == -1)
+                {
+                    this.style.marginLeft = -790*otabli.length + 'px';
+                    index = now;
+                }
+            });
+        };
+    })();
+</script>
+</body>
+</html>
