@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box1{
+            width:100px;
+            height: 100px;
+            background:red;
+            position:absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1"></div>
+    <script>
+        var obox=document.getElementById('box1');
+        document.onkeydown=function (ev) {
+            ev = ev || window.event;
+            var keyCode=ev.keyCode;
+            switch(keyCode){
+                case 68:
+                case 39:
+                    obox.style.left=obox.offsetLeft+50+'px';
+                    break;
+                case 65:
+                case 37:
+                    obox.style.left=obox.offsetLeft-50+'px';
+                    break;
+                case 87:
+                case 38:
+                    obox.style.top=obox.offsetTop-50+'px';
+                    break;
+                case 83:
+                case 40:
+                    obox.style.top=obox.offsetTop+50+'px';
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
